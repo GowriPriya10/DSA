@@ -178,6 +178,20 @@ class SLL {
         }
         return this;
     }
+
+    recursiveReverse(head) {
+        if(head === null || head.next === null) {
+            return head;
+        }
+
+        const newHead = this.recursiveReverse(head.next); 
+       
+        const temp = head.next;
+        temp.next = head;
+        head.next = null;
+
+        return newHead;
+    }
 }
 
 function convertArrayToList(arr) {
@@ -221,3 +235,5 @@ console.log('---print---')
 console.log(JSON.stringify(sll));
 console.log('---rev---')
 console.log(JSON.stringify(sll.reverse()));
+console.log('---recursive rev---')
+console.log(JSON.stringify(sll.recursiveReverse(sll.head)));
