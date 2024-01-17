@@ -161,6 +161,23 @@ class SLL {
         }
         return false;
     }
+
+    reverse() {
+        if(this.head){
+            let prev = null;
+            let current = this.head;
+            let next = current.next;
+            while(current.next) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                next = current.next;
+            }
+            current.next = prev;
+            this.head = current;
+        }
+        return this;
+    }
 }
 
 function convertArrayToList(arr) {
@@ -200,3 +217,7 @@ console.log(JSON.stringify(sll.insertAtPos(7, 7)));
 console.log(JSON.stringify(sll.insertBeforeVal(8, 7)));
 console.log(JSON.stringify(sll.insertBeforeVal(0, 6)));
 console.log(JSON.stringify(sll.insertBeforeVal(10, 4)));
+console.log('---print---')
+console.log(JSON.stringify(sll));
+console.log('---rev---')
+console.log(JSON.stringify(sll.reverse()));
