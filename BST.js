@@ -187,13 +187,14 @@ class BST{
     }
 
     min() {
-        const minVal = (root) => {
-            if(!root.left) {
-                return root.value;
-            }
-            return minVal(root.left);
+        return this.minVal(this.root);
+    }
+    
+    minVal(root){
+        if(!root.left) {
+            return root.value;
         }
-        return minVal(this.root);
+        return this.minVal(root.left);
     }
 
     max() {
@@ -281,6 +282,36 @@ class BST{
         }
         return res;
     }
+
+    delete(key) {
+
+        const del = (root, key) => {
+            if(!root) {
+                return root;
+            }
+
+            if(key < root.value) {
+                root.left = del(root.left, key);
+            }else if(key > root.value) {
+                root.right = del(root.right, key);
+            }else {
+                if(!root.left && !root.right) {
+                    return null;
+                }
+                if(!root.left) {
+                    return root.right;
+                }else if(!root.right) {
+                    return root.left;
+                }else {
+                    root.value = this.minVal(root.right);
+                    root.right = del(root.right, root.value);
+                }
+            }
+            return root;
+        }
+
+        return del(this.root, key);
+    }
 }
 
 const bst = new BST();
@@ -303,4 +334,13 @@ console.log(bst.max());
 console.log(bst.depth());
 console.log('ceil of 3 --- ',bst.ceil(3));
 console.log('floor of 7 --- ',bst.floor(7));
+console.log('delete leaf node i.e., 1');
+bst.delete(1);
+console.log('levelOrder/BFS --- ',bst.levelOrder());
+console.log('delete node with one child i.e., 2');
+bst.delete(2);
+console.log('levelOrder/BFS --- ',bst.levelOrder());
+console.log('delete node with 2 childs i.e., 10');
+bst.delete(10);
+console.log('levelOrder/BFS --- ',bst.levelOrder());
 console.log(JSON.stringify(bst.invertTree()));
